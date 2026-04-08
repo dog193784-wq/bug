@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CareLink</string>
+    <string name="tagline">Because Distance Shouldn't Mean Disconnect</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="steps">Steps</string>
+    <string name="sleep">Sleep</string>
+    <string name="blood_oxygen">Blood Oxygen (SpO2)</string>
+    <string name="stress">Stress Level</string>
+    <string name="calories">Calories Burned</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">No Data Received</string>
+    <string name="last_updated">Last updated: %1$s</string>
+    <string name="daily_report">Daily Report</string>
+    <string name="weekly_report">Weekly Report</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="emergency_alert">Emergency Alert</string>
+    <string name="settings">Settings</string>
+    <string name="add_parent">Add Parent</string>
+    <string name="setup_complete">Setup Complete!</string>
+    <string name="monitoring_started">CareLink is now monitoring %1$s's health</string>
+</resources>

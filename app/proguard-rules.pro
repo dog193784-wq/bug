@@ -1,0 +1,2 @@
+-dontwarn javax.annotation.**
+-keep class com.carelink.app.** { *; }
