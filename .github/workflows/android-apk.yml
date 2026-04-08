@@ -19,19 +19,24 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
-      - name: Install Gradle 8.4
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew (if present)
         run: |
-          curl -sSL https://services.gradle.org/distributions/gradle-8.4-bin.zip -o gradle-8.4-bin.zip
-          unzip -q gradle-8.4-bin.zip
-          ./gradle-8.4/bin/gradle --version
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          fi
 
       - name: Assemble debug APK
-        run: ./gradle-8.4/bin/gradle :app:assembleDebug --stacktrace --warning-mode all
+        run: gradle :app:assembleDebug --stacktrace
 
       - name: Assemble release APK (unsigned)
-        run: ./gradle-8.4/bin/gradle :app:assembleRelease --stacktrace --warning-mode all
+        run: gradle :app:assembleRelease --stacktrace
 
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
@@ -65,13 +70,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
-      - name: Install Gradle 8.4
-        run: |
-          curl -sSL https://services.gradle.org/distributions/gradle-8.4-bin.zip -o gradle-8.4-bin.zip
-          unzip -q gradle-8.4-bin.zip
-          ./gradle-8.4/bin/gradle --version
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Decode keystore
         run: |
@@ -80,12 +84,12 @@ jobs:
 
       - name: Build signed release APK
         run: |
-          ./gradle-8.4/bin/gradle :app:assembleRelease \
+          gradle :app:assembleRelease \
             -Pandroid.injected.signing.store.file=$PWD/release.keystore \
             -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
             -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
             -Pandroid.injected.signing.key.password=$KEY_PASSWORD \
-            --stacktrace --warning-mode all
+            --stacktrace
 
       - name: Upload signed release APK artifact
         uses: actions/upload-artifact@v4
