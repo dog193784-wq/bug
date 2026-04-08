@@ -19,6 +19,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+<<<<<<< codex/implement-smart-watch-data-extraction-f0nluu
           cache: gradle
 
       - name: Install Gradle 8.4
@@ -34,6 +35,26 @@ jobs:
 
       - name: Assemble release APK (unsigned)
         run: $PWD/gradle-8.4/bin/gradle :app:assembleRelease --stacktrace --warning-mode all
+=======
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew (if present)
+        run: |
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          fi
+
+      - name: Assemble debug APK
+        run: gradle :app:assembleDebug --stacktrace
+
+      - name: Assemble release APK (unsigned)
+        run: gradle :app:assembleRelease --stacktrace
+>>>>>>> main
 
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
@@ -67,6 +88,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+<<<<<<< codex/implement-smart-watch-data-extraction-f0nluu
           cache: gradle
 
       - name: Install Gradle 8.4
@@ -76,6 +98,14 @@ jobs:
           GRADLE_BIN="$PWD/gradle-8.4/bin/gradle"
           $GRADLE_BIN --version
           $GRADLE_BIN --version | grep -q 'Gradle 8.4'
+=======
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+>>>>>>> main
 
       - name: Decode keystore
         run: |
@@ -84,12 +114,20 @@ jobs:
 
       - name: Build signed release APK
         run: |
+<<<<<<< codex/implement-smart-watch-data-extraction-f0nluu
           $PWD/gradle-8.4/bin/gradle :app:assembleRelease \
+=======
+          gradle :app:assembleRelease \
+>>>>>>> main
             -Pandroid.injected.signing.store.file=$PWD/release.keystore \
             -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
             -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
             -Pandroid.injected.signing.key.password=$KEY_PASSWORD \
+<<<<<<< codex/implement-smart-watch-data-extraction-f0nluu
             --stacktrace --warning-mode all
+=======
+            --stacktrace
+>>>>>>> main
 
       - name: Upload signed release APK artifact
         uses: actions/upload-artifact@v4
