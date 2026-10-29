@@ -3,48 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Read-only GitHub Pages dangling DNS triage helper for authorized security testing.">
-<title>GitHub Pages Takeover Triage</title>
+<meta name="robots" content="noindex,nofollow">
+<title>Subdomain Takeover — Proof of Concept</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#131d31;--line:#2b3b59;--text:#e8eefb;--muted:#a3b2cc;--cyan:#67e8f9;--amber:#fbbf24;--red:#fb7185;--green:#86efac}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#182746,var(--bg) 65%);color:var(--text);font:15px/1.55 system-ui,Segoe UI,sans-serif}main{max-width:1000px;margin:auto;padding:32px 20px 60px}.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--cyan);font-weight:800}h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:10px 0}.intro{color:var(--muted);max-width:780px}.pill{display:inline-block;border:1px solid #3b5071;border-radius:999px;padding:5px 10px;font-size:12px;color:#c6d8f6;margin:8px 5px 0 0}.panel{background:rgba(19,29,49,.95);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}h2{font-size:18px;margin:0 0 5px}.hint{font-size:13px;color:var(--muted);margin:0 0 14px}label{display:block;color:#c4d2e9;font-size:13px;font-weight:700;margin:13px 0 6px}input,textarea{width:100%;background:#091222;border:1px solid #3a4d6e;border-radius:9px;color:var(--text);font:inherit;padding:11px}textarea{min-height:85px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.btn{cursor:pointer;border:1px solid #425778;background:#1c2b46;color:var(--text);padding:10px 14px;border-radius:9px;font-weight:750}.btn.primary{background:var(--cyan);color:#08202a;border-color:var(--cyan)}.status{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:15px;overflow-wrap:anywhere}.tag{display:inline-block;font-size:11px;font-weight:850;padding:4px 8px;border-radius:99px;border:1px solid;margin-bottom:8px}.tag.warn{color:var(--amber);border-color:#806325}.tag.good{color:var(--green);border-color:#376d51}.tag.bad{color:var(--red);border-color:#8b4050}.meta{color:var(--muted);font-size:13px;margin-top:6px;overflow-wrap:anywhere}.code{font:13px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#080f1c;padding:12px;border-radius:8px;margin-top:10px}.warning{border-left:3px solid var(--amber);background:#292416;color:#f6e4b2;padding:12px;border-radius:6px;font-size:13px;margin-top:14px}li{margin:7px 0;color:#cbd7eb}a{color:var(--cyan)}footer{color:var(--muted);font-size:12px;margin-top:20px}@media(max-width:650px){.row{grid-template-columns:1fr}}
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121c30;--line:#2d3d5a;--text:#edf3ff;--muted:#a7b6ce;--cyan:#67e8f9;--amber:#fbbf24}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at top,#1a2a49,#0b1020 65%);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}.card{width:min(720px,100%);background:rgba(18,28,48,.96);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,5vw,42px);box-shadow:0 24px 80px #0005}.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--cyan);font-weight:800}.mark{display:grid;place-items:center;width:58px;height:58px;border:1px solid #46617e;border-radius:15px;color:var(--cyan);font-size:28px;margin:18px 0}h1{font-size:clamp(27px,5vw,40px);line-height:1.12;margin:0 0 12px}p{color:var(--muted)}label{display:block;font-weight:700;font-size:13px;margin:20px 0 7px}input{width:100%;padding:13px 14px;background:#080f1c;border:1px solid #3a4d6c;border-radius:9px;color:var(--text);font:inherit}input:focus{outline:2px solid var(--cyan);outline-offset:2px}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}button{padding:11px 15px;border-radius:9px;border:1px solid #3d5274;background:#1c2b46;color:var(--text);font:inherit;font-weight:750;cursor:pointer}button.primary{background:var(--cyan);border-color:var(--cyan);color:#06202a}.evidence{margin-top:24px;border:1px solid var(--line);border-radius:12px;padding:16px;background:#0b1425}.badge{display:inline-block;border:1px solid #765c25;color:var(--amber);border-radius:99px;padding:4px 9px;font-size:11px;font-weight:800;letter-spacing:.05em}.host{font:14px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;color:var(--cyan);margin-top:8px}.note{font-size:12px;margin-top:20px}.hidden{display:none}.rule{height:1px;background:var(--line);margin:22px 0}
 </style>
 </head>
-<body><main>
-<div class="eyebrow">AUTHORIZED SECURITY TESTING · GITHUB PAGES</div>
-<h1>GitHub Pages Takeover Triage</h1>
-<p class="intro">A static, read-only helper for reviewing a hostname that may point to GitHub Pages. It queries Cloudflare's public DNS-over-HTTPS endpoint for CNAME evidence and lets you record independent HTTP observations. It does not attempt to claim a repository, add a custom domain, or change DNS.</p>
-<span class="pill">Read-only DNS lookup</span><span class="pill">Static GitHub Pages app</span><span class="pill">Evidence-first</span>
-<section class="panel">
-<h2>1. Inspect a hostname</h2><p class="hint">Use only a hostname you own or are explicitly authorized to assess. Enter a hostname, not a URL.</p>
-<label for="host">Hostname</label><input id="host" placeholder="subdomain.your-owned-domain.example" autocomplete="off" spellcheck="false">
-<div class="row"><div><label for="httpStatus">Observed HTTP status (optional)</label><input id="httpStatus" placeholder="e.g. 404"></div><div><label for="fingerprint">Observed response / fingerprint (optional)</label><input id="fingerprint" placeholder="e.g. GitHub Pages 404 page"></div></div>
-<label for="notes">Evidence notes (optional)</label><textarea id="notes" placeholder="Timestamp, scope reference, resolver, approved command output, limitations…"></textarea>
-<div class="btns"><button class="btn primary" id="check">Check CNAME</button><button class="btn" id="clear">Clear</button><button class="btn" id="export">Export report JSON</button></div>
-<div id="output" aria-live="polite" class="status" hidden></div>
-<div class="warning">A CNAME to *.github.io, an absent CNAME, an HTTP 404, or a generic error is not proof of takeover. This page reports indicators only and cannot determine whether a site is claimable.</div>
+<body><main class="card">
+<div class="eyebrow">SECURITY TEST · PROOF OF CONCEPT</div>
+<div class="mark" aria-hidden="true">!</div>
+<h1>Subdomain Takeover<br>Proof of Concept</h1>
+<p>This page is a minimal proof-of-concept landing page for an authorized subdomain-takeover test. If it is being served from the affected hostname, record the hostname and supporting DNS evidence in your report.</p>
+<label for="target">Affected hostname or URL (optional)</label>
+<input id="target" type="text" placeholder="https://subdomain.example.com" autocomplete="url" spellcheck="false">
+<div class="buttons"><button class="primary" id="show">Show hostname</button><button id="copy">Copy evidence text</button><button id="reset">Reset</button></div>
+<section id="evidence" class="evidence hidden" aria-live="polite">
+<span class="badge">MANUAL TEST NOTE</span>
+<div><strong>Subdomain Takeover — Proof of Concept</strong></div>
+<div class="host" id="shownHost"></div>
+<p id="resultText">This page is displaying the hostname entered by the tester.</p>
 </section>
-<section class="panel"><h2>2. Validation checklist</h2><p class="hint">Treat every result as a lead until the evidence supports a conclusion.</p>
-<ul><li>Confirm the hostname is explicitly in the bug bounty program's scope.</li><li>Review the DNS CNAME response and relevant resolution errors; DNS-over-HTTPS answers can be cached or incomplete.</li><li>Correlate the target with current GitHub Pages documentation and the exact HTTP response.</li><li>Do not attempt to attach the target domain to a repository or publish content on a third-party domain. For claimability testing, use a domain you control and follow GitHub's rules.</li><li>Record evidence, timestamps, and false-positive checks. Report as “potential” unless claimability is established in an authorized lab.</li></ul>
-<p class="hint">References: <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank" rel="noreferrer">GitHub Pages custom domains</a> · <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noreferrer">About GitHub Pages</a></p>
-</section>
-<footer>Static GitHub Pages app. DNS queries go to Cloudflare DNS-over-HTTPS from your browser. Notes remain in this page unless exported. Browser restrictions prevent reliable automated HTTP fingerprinting here.</footer>
+<div class="rule"></div>
+<p class="note">This page does not inspect or verify the URL you enter. The hostname is displayed as text only; no network request is made. A page label alone does not prove takeover. Confirm that the content is actually served from the in-scope hostname and preserve DNS/HTTP evidence. Use only domains you own or are authorized to test.</p>
 </main>
 <script>
-const $=id=>document.getElementById(id);let report=null;
-function validHost(h){return h.length<=253&&/^(?=.{1,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)(?:\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?))*$/.test(h)}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function show(title,kind,body){$('output').hidden=false;$('output').innerHTML='<span class="tag '+kind+'">'+esc(title)+'</span><div>'+body+'</div>'}
-$('check').onclick=async()=>{const host=$('host').value.trim().replace(/\.$/,'').toLowerCase();if(!validHost(host)){show('INVALID HOSTNAME','bad','Enter a valid hostname without a scheme, path, or port.');return}
-show('LOOKING UP DNS','warn','Querying Cloudflare DNS-over-HTTPS for a CNAME record…');
-const item={hostname:host,checked_at:new Date().toISOString(),http_status:$('httpStatus').value.trim(),http_fingerprint:$('fingerprint').value.trim(),notes:$('notes').value.trim(),resolver:'Cloudflare DNS-over-HTTPS',answers:[],status:'inconclusive'};
-try{const url='https://cloudflare-dns.com/dns-query?name='+encodeURIComponent(host)+'&type=CNAME';const res=await fetch(url,{headers:{accept:'application/dns-json'}});if(!res.ok)throw Error('DNS endpoint returned HTTP '+res.status);const data=await res.json();item.dns_status=data.Status;item.answers=(data.Answer||[]).map(a=>({name:a.name,type:a.type,ttl:a.TTL,data:a.data}));item.authority=(data.Authority||[]).map(a=>({name:a.name,type:a.type,ttl:a.TTL,data:a.data}));const targets=item.answers.filter(a=>a.type===5).map(a=>a.data.replace(/\.$/,'')).filter(t=>t==='github.io'||t.endsWith('.github.io'));
-if(targets.length){item.status='github-pages-cname-indicator';show('GITHUB PAGES CNAME INDICATOR','warn','<div><b>'+esc(host)+'</b> has CNAME answer(s) pointing to a GitHub Pages namespace.</div><div class="code">'+esc(targets.join('\n'))+'</div><div class="meta">This does not establish that the target is unclaimed or exploitable.</div>')}
-else if(item.answers.length){item.status='cname-not-confirmed';show('NO GITHUB.IO CNAME IN ANSWER','good','DNS returned answer(s), but no CNAME ending in <code>.github.io</code> was found in this response.<div class="code">'+esc(JSON.stringify(item.answers,null,2))+'</div>')}
-else{item.status=data.Status===3?'nxdomain-no-cname-answer':'no-cname-answer';show(data.Status===3?'NXDOMAIN RESPONSE':'NO CNAME ANSWER',data.Status===3?'warn':'good','No CNAME answer was returned for <b>'+esc(host)+'</b>. This alone is not a takeover finding.<div class="code">'+esc(JSON.stringify({dns_status:data.Status,answers:item.answers,authority:item.authority},null,2))+'</div>')}
-report=item;
-}catch(e){item.status='lookup-error';item.error=e.message;report=item;show('DNS LOOKUP FAILED','bad','Could not complete the lookup: '+esc(e.message)+'. Check connectivity, endpoint availability, and hostname, then retry.')}
-};
-$('clear').onclick=()=>{$('host').value='';$('httpStatus').value='';$('fingerprint').value='';$('notes').value='';$('output').hidden=true;report=null};
-$('export').onclick=()=>{if(!report){alert('Run a DNS check first.');return}report.http_status=$('httpStatus').value.trim();report.http_fingerprint=$('fingerprint').value.trim();report.notes=$('notes').value.trim();const b=new Blob([JSON.stringify(report,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='github-pages-takeover-triage.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
+const input=document.getElementById('target'),section=document.getElementById('evidence'),shown=document.getElementById('shownHost');
+function render(){const value=input.value.trim();if(!value){alert('Enter the affected hostname or URL first.');return}shown.textContent=value;section.classList.remove('hidden')}
+document.getElementById('show').addEventListener('click',render);
+document.getElementById('reset').addEventListener('click',()=>{input.value='';shown.textContent='';section.classList.add('hidden')});
+document.getElementById('copy').addEventListener('click',async()=>{const value=input.value.trim();if(!value){alert('Enter the affected hostname or URL first.');return}const text='Subdomain Takeover — Proof of Concept\nAffected hostname/URL: '+value+'\nNote: Verify that this page is actually served from the affected hostname and attach independent DNS/HTTP evidence.';try{await navigator.clipboard.writeText(text);alert('Evidence text copied.')}catch(e){window.prompt('Copy the evidence text:',text)}});
 </script></body></html>
