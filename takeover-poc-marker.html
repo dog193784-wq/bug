@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Authorized Subdomain Takeover Test — PoC Marker</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--green:#7ee787;--amber:#f0b44c}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,sans-serif}.card{width:min(700px,100%);padding:clamp(24px,5vw,42px);border:1px solid var(--line);border-radius:14px;background:var(--panel)}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.14em}h1{font-size:clamp(27px,5vw,38px);line-height:1.15;margin:18px 0}p{color:var(--muted)}code,.host{font-family:ui-monospace,monospace;overflow-wrap:anywhere}.host{color:var(--green);font-size:14px;margin-top:8px}.tag{display:inline-block;color:var(--amber);border:1px solid #6b542d;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800}.note{border-top:1px solid var(--line);padding-top:18px;margin-top:24px;font-size:12px}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="eyebrow">AUTHORIZED SECURITY TEST · STATIC MARKER</div>
+<span class="tag">PROOF OF CONCEPT</span>
+<h1>Subdomain Takeover Test</h1>
+<p>This static page is a marker for an authorized subdomain-takeover validation exercise. If you intentionally configured a test hostname to serve this page, the hostname below identifies the browser address used to reach it.</p>
+<strong>Observed browser hostname</strong>
+<div class="host" id="host">Hostname unavailable</div>
+<p id="time"></p>
+<p class="note">This page does not perform DNS lookups, claim cloud resources, or verify a takeover. A marker page alone is not proof of vulnerability. Confirm the DNS record, the provider's unclaimed-resource condition, and that this content is actually served from a hostname you own or are explicitly authorized to test. Do not point third-party production domains at this page without written authorization.</p>
+</main>
+<script>
+document.getElementById('host').textContent = location.hostname || 'Hostname unavailable';
+document.getElementById('time').textContent = 'Page rendered: ' + new Date().toISOString();
+</script>
+</body>
+</html>
